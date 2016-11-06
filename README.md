@@ -12,7 +12,7 @@ Add ``"jsonmirror",`` to installed apps.
 
 ## Register models
 
-Declare the models you want to mirror: in settings.py:
+Declare the models you want to mirror in settings.py:
 
   ```python
 MIRRORED_MODELS = ['myapp.models.MyModel', 'django.contrib.auth.models.User']
