@@ -10,7 +10,7 @@ pip install git+https://github.com/synw/django-jsonmirror.git
 
 Add ``"jsonmirror",`` to installed apps.
 
-## Configure your models
+## Register models
 
 Declare the models you want to mirror: in settings.py:
 
