@@ -35,6 +35,20 @@ Installed apps:
 "djR",
 "jsonmirror",
   ```
+  
+Extra settings:
+
+  ```python
+
+# required
+MIRROR_DB = "mydb"
+MIRROR_TABLE = "mymirrortable"
+
+# optional:
+RETHINKDB_HOST = "127.0.0.1" # default
+RETHINKDB_USER = "admin" # default is None
+RETHINKDB_PASSWORD = "mypassword" # default is None
+  ```
 
 ## Models synchronization
 
