@@ -20,22 +20,10 @@ MIRRORED_MODELS = ['myapp.models.MyModel', 'django.contrib.auth.models.User']
   
 ## Backends
 
-Currently only [Rethinkdb](https://rethinkdb.com) is available as backend. Setup:
+Currently only [Rethinkdb](https://rethinkdb.com) is available as backend. 
 
-  ```python
-pip install rethinkdb geojson jsonschema djangoajax six python-dateutil
-pip install git+https://github.com/dmpayton/reqon.git
-pip install git+https://github.com/synw/django-R.git
-  ```
+Install [django-R](https://github.com/synw/django-R).
 
-Installed apps:
-
-  ```python
-"django_ajax",
-"djR",
-"jsonmirror",
-  ```
-  
 Extra settings:
 
   ```python
