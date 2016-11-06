@@ -43,7 +43,7 @@ RETHINKDB_PASSWORD = "mypassword" # default is None
 
 ### Custom backend
 
-To write your own backend you can use the setting ``MIRROR_BACKEND = "databaseX"`` (if you do so please make some PR).
+To write your own backend you can use the setting ``MIRROR_BACKEND = "backendname_here"`` (if you do so please make some PR).
 
 ## Models synchronization
 
