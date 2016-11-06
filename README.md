@@ -20,7 +20,7 @@ MIRRORED_MODELS = ['myapp.models.MyModel', 'django.contrib.auth.models.User']
   
 ## Backends
 
-Currently only [Rethinkdb](https://rethinkdb.com) is available as backend. 
+Currently only [Rethinkdb](https://rethinkdb.com) is available as backend.
 
 Install [django-R](https://github.com/synw/django-R).
 
@@ -37,6 +37,8 @@ RETHINKDB_HOST = "127.0.0.1" # default
 RETHINKDB_USER = "admin" # default is None
 RETHINKDB_PASSWORD = "mypassword" # default is None
   ```
+
+To write your own backend you can use the setting ``MIRROR_BACKEND = "databaseX"`` (if you do so please make some PR).
 
 ## Models synchronization
 
