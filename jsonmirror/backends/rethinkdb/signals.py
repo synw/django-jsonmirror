@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import json
-from django.core import serializers
 from jsonmirror.conf import BACKEND, DB, TABLE
 if BACKEND == "rethinkdb":
     from djR.r_producers import R
@@ -9,22 +7,11 @@ if BACKEND == "rethinkdb":
 
 
 def model_save(sender, instance, created, **kwargs):
-    data = json.loads(serializers.serialize("json", [instance])[1:-1])
-    if BACKEND == "rethinkdb":
-        if created:
-            res = R.write(DB, TABLE, data)
-        else:
-            # check if the document exists or not
-            modelname = str(instance._meta)
-            document_exists_in_db = document_exists(DB, TABLE, modelname, instance.pk)
-            if not document_exists_in_db:
-                res = R.write(DB, TABLE, data)
-            else:
-                modelname = str(instance._meta)
-            # write
-            res = R.update(DB, TABLE, data, modelname, instance.pk)
-    return res
-            
+    from jsonmirror.utils import mirror_model
+    mirror_model(instance, created)
+    return
+
+
 def model_delete(sender, instance, **kwargs):
     modelname = str(instance._meta)
     document_exists_in_db = document_exists(DB, TABLE, modelname, instance.pk)
