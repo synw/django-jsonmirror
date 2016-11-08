@@ -22,8 +22,8 @@ If you want a secondary index set on your model declare the index field:
 
   ```python
 MIRRORED_MODELS = [
-    ['mypages.models.Page', {"index_field": "url"}],
-    'django.contrib.auth.models.User'
+    'myapp.models.MyModel',
+    ['django.contrib.auth.models.User', {"index_field": "username"}]
 ]
   ```
   
