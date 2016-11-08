@@ -17,6 +17,15 @@ Declare the models you want to mirror in settings.py:
   ```python
 MIRRORED_MODELS = ['myapp.models.MyModel', 'django.contrib.auth.models.User']
   ```
+
+If you want a secondary index set on your model declare the index field:
+
+  ```python
+MIRRORED_MODELS = [
+    ['mypages.models.Page', {"index_field": "url"}],
+    'django.contrib.auth.models.User'
+]
+  ```
   
 ## Backends
 
