@@ -8,7 +8,8 @@ if BACKEND == "rethinkdb":
 
 def model_save(sender, instance, created, **kwargs):
     from jsonmirror.utils import mirror_model
-    mirror_model(instance, created)
+    res = mirror_model(instance, created, True)
+    #print str(res)
     return
 
 

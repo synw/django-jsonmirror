@@ -6,7 +6,7 @@ from django.core import serializers
 from django.db.models.signals import post_save, post_delete
 from django.utils import timezone
 from django.conf import settings
-from jsonmirror.conf import BACKEND
+from jsonmirror.conf import BACKEND, TABLE
 if BACKEND == "rethinkdb":
     from jsonmirror.backends.rethinkdb.signals import model_save, model_delete
     from jsonmirror.backends.rethinkdb import mirror_model as r_mirror_model
@@ -66,7 +66,11 @@ def prepare_data(instance):
 
 
 def mirror_model(instance, created=False, verbose=False):
+    table = TABLE
+    custom_table = get_option(instance, "table")
+    if custom_table is not None:
+        table = custom_table
     data = prepare_data(instance)
     if BACKEND == "rethinkdb":
-        res = r_mirror_model(instance, data, created, verbose)
+        res = r_mirror_model(instance, data, created, verbose, table)
     return res

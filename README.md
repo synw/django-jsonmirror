@@ -27,6 +27,15 @@ MIRRORED_MODELS = [
 ]
   ```
   
+If you want to record a model in a different table than the default one:
+
+  ```python
+MIRRORED_MODELS = [
+    'myapp.models.MyModel',
+    ['django.contrib.auth.models.User', {"index_field": "username", "table": "table_name"}]
+]
+  ```
+  
 ## Backends
 
 Currently only [Rethinkdb](https://rethinkdb.com) is available as backend.

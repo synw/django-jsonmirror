@@ -16,7 +16,7 @@ def order_documents(docs):
 
 
 def document_exists(db, table, modelname, pk):
-    q = r.db(DB).table(TABLE).filter({"pk":pk, "model":modelname}).order_by("timestamp").pluck("pk","model")
+    q = r.db(DB).table(table).filter({"pk":pk, "model":modelname}).order_by("timestamp").pluck("pk","model")
     #existing_documents = order_documents(R.run_query(q))
     #print modelname+" | "+str(pk)+" _> "+str(existing_documents)
     existing_documents = R.run_query(q)
@@ -26,26 +26,29 @@ def document_exists(db, table, modelname, pk):
     return json_document_exists
 
 
-def mirror_model(instance, data, created=False, verbose=False):
+def mirror_model(instance, data, created=False, verbose=False, table=None):
     res = {"created": 0, "updated": 0}
     modelname = str(instance._meta)
+    table_to_use = TABLE
+    if table is not None:
+        table_to_use = table
     # record data
     if created is True:
-        R.write(DB, TABLE, data)
+        res["status"] = R.write(DB, table_to_use, data)
         res["created"] += 1
         if verbose is True:
-            print "[ "+modelname+" ] Document "+str(instance.pk)+" created"
+            print "[ "+modelname+" ] Document "+str(instance.pk)+" created in table "+table_to_use
     else:
         # check if the document exists or not
-        document_exists_in_db = document_exists(DB, TABLE, modelname, instance.pk)
+        document_exists_in_db = document_exists(DB, table_to_use, modelname, instance.pk)
         if not document_exists_in_db:
-            R.write(DB, TABLE, data)
+            res["status"] = R.write(DB, table_to_use, data)
             res["created"] += 1
             if verbose is True:
-                print "[ "+modelname+" ] Document "+str(instance.pk)+" created"
+                print "[ "+modelname+" ] Document "+str(instance.pk)+" created in table "+table_to_use
         else:
-            R.update(DB, TABLE, data, modelname, instance.pk)
+            res["status"] = R.update(DB, table_to_use, data, modelname, instance.pk)
             res["updated"] += 1
             if verbose is True:
-                print "[ "+modelname+" ] Document "+str(instance.pk)+" updated"
+                print "[ "+modelname+" ] Document "+str(instance.pk)+" updated in table "+table_to_use
     return res
