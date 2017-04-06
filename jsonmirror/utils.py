@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-
+from __future__ import print_function
 import importlib
 import json
 from django.core import serializers
@@ -59,8 +58,8 @@ def prepare_data(instance):
             index_value = getattr(instance, index, None)
             data["index"] = index_value
             #print json.dumps(data, indent = 4)
-        else:
-            print "No field named "+index
+        #else:
+        #    print("No field named "+index)
     data["timestamp"] = int(timezone.now().strftime("%s"))
     return data
 

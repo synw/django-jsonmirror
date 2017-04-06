@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-
+from __future__ import print_function
 from rethinkdb import r
 from djR.r_producers import R
 from jsonmirror.conf import BACKEND, DB, TABLE
@@ -37,7 +36,7 @@ def mirror_model(instance, data, created=False, verbose=False, table=None):
         res["status"] = R.write(DB, table_to_use, data)
         res["created"] += 1
         if verbose is True:
-            print "[ "+modelname+" ] Document "+str(instance.pk)+" created in table "+table_to_use
+            print("[ "+modelname+" ] Document "+str(instance.pk)+" created in table "+table_to_use)
     else:
         # check if the document exists or not
         document_exists_in_db = document_exists(DB, table_to_use, modelname, instance.pk)
@@ -45,10 +44,10 @@ def mirror_model(instance, data, created=False, verbose=False, table=None):
             res["status"] = R.write(DB, table_to_use, data)
             res["created"] += 1
             if verbose is True:
-                print "[ "+modelname+" ] Document "+str(instance.pk)+" created in table "+table_to_use
+                print("[ "+modelname+" ] Document "+str(instance.pk)+" created in table "+table_to_use)
         else:
             res["status"] = R.update(DB, table_to_use, data, modelname, instance.pk)
             res["updated"] += 1
             if verbose is True:
-                print "[ "+modelname+" ] Document "+str(instance.pk)+" updated in table "+table_to_use
+                print("[ "+modelname+" ] Document "+str(instance.pk)+" updated in table "+table_to_use)
     return res
