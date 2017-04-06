@@ -38,7 +38,7 @@ def get_model_from_conf(modconf):
 
 def get_option(instance, option_name):
     mirrored_models = getattr(settings, 'MIRRORED_MODELS', [])
-    for modconf in mirrored_models:    
+    for modconf in mirrored_models:
         if type(modconf) is list:
             model, options = get_model_from_conf(modconf)
             if model == instance.__class__:

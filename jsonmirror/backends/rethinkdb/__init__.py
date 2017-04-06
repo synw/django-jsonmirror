@@ -46,7 +46,7 @@ def mirror_model(instance, data, created=False, verbose=False, table=None):
             if verbose is True:
                 print("[ "+modelname+" ] Document "+str(instance.pk)+" created in table "+table_to_use)
         else:
-            res["status"] = R.update(DB, table_to_use, data, modelname, instance.pk)
+            res["status"] = R.update(DB, table_to_use, data,{})
             res["updated"] += 1
             if verbose is True:
                 print("[ "+modelname+" ] Document "+str(instance.pk)+" updated in table "+table_to_use)

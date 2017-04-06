@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-
+from __future__ import print_function
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from jsonmirror.management.conf import bcolors
@@ -18,7 +17,7 @@ class Command(BaseCommand):
             for modconf in mirrored_models:
                 model, options = get_model_from_conf(modconf)
                 modelname = str(model._meta)
-                print "* Syncing model "+bcolors.OKBLUE+modelname+bcolors.ENDC
+                print("* Syncing model "+bcolors.OKBLUE+modelname+bcolors.ENDC)
                 instances = model.objects.all()
                 created = 0
                 updated = 0
@@ -30,8 +29,8 @@ class Command(BaseCommand):
                         updated += 1
                     num_instances += 1
                 num_models += 1
-                print str(created)+" documents created"
-                print str(updated)+" documents updated"
-        print "[ "+bcolors.OKGREEN+bcolors.BOLD+"OK"+bcolors.ENDC+" ] "+bcolors.BOLD+str(num_instances)+bcolors.ENDC+" instances synced in "+\
-        str(num_models)+" models"
+                print(str(created)+" documents created")
+                print(str(updated)+" documents updated")
+        print("[ "+bcolors.OKGREEN+bcolors.BOLD+"OK"+bcolors.ENDC+" ] "+bcolors.BOLD+str(num_instances)+bcolors.ENDC+" instances synced in "+\
+        str(num_models)+" models")
         return
