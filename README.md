@@ -1,6 +1,6 @@
 # Django Json Mirror
 
-Mirror and sync Django models in a json database. 
+Mirror and sync Django models in a json in another database. 
 
 ## Install
 
@@ -84,5 +84,12 @@ To write your own backend you can use the setting ``MIRROR_BACKEND = "backendnam
 The command ``python manage.py sync_models`` will mirror all the models declared in the ``MIRRORED_MODELS`` setting.
 
 All the models declared in this setting will be auto created/deleted/updated in the json database.
+
+## Todo
+
+- [ ] Sqlite backend
+- [ ] Redis backend
+- [ ] Support DRF serializers
+- [ ] Support custom serializers
 
  
