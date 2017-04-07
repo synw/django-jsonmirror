@@ -17,13 +17,22 @@ def order_documents(docs):
 
 def document_exists(db, table, modelname, pk):
     q = r.db(DB).table(table).filter({"pk":pk, "model":modelname}).order_by("timestamp").pluck("pk","model")
-    #existing_documents = order_documents(R.run_query(q))
-    #print modelname+" | "+str(pk)+" _> "+str(existing_documents)
     existing_documents = R.run_query(q)
     json_document_exists = False
     if len(existing_documents) > 0:
         json_document_exists = True
     return json_document_exists
+
+
+def delete_model(instance):
+    modelname = str(instance._meta)
+    soft_delete = get_option(instance, "soft_delete")
+    if soft_delete is False:
+        document_exists_in_db = document_exists(DB, TABLE, modelname, instance.pk)
+        if document_exists_in_db:
+            filters = {"model": modelname, "pk": instance.pk}
+            R.delete_filtered(DB, TABLE, filters)
+    return
 
 
 def mirror_model(instance, data, created=False, verbose=False, table=None):
