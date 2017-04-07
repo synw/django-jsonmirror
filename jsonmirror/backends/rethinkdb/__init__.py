@@ -2,6 +2,7 @@ from __future__ import print_function
 from rethinkdb import r
 from djR.r_producers import R
 from jsonmirror.conf import BACKEND, DB, TABLE
+from jsonmirror.conf import get_option
 
 
 def order_documents(docs):
@@ -38,16 +39,20 @@ def mirror_model(instance, data, created=False, verbose=False, table=None):
         if verbose is True:
             print("[ "+modelname+" ] Document "+str(instance.pk)+" created in table "+table_to_use)
     else:
-        # check if the document exists or not
-        document_exists_in_db = document_exists(DB, table_to_use, modelname, instance.pk)
-        if not document_exists_in_db:
-            res["status"] = R.write(DB, table_to_use, data)
-            res["created"] += 1
-            if verbose is True:
-                print("[ "+modelname+" ] Document "+str(instance.pk)+" created in table "+table_to_use)
-        else:
+        optype = "write"
+        imutable = get_option(instance, "imutable")
+        if imutable is False:
+            document_exists_in_db = document_exists(DB, table_to_use, modelname, instance.pk)
+            if document_exists_in_db:
+                optype = "update"
+        if optype == "update":
             res["status"] = R.update(DB, table_to_use, data,{})
             res["updated"] += 1
             if verbose is True:
                 print("[ "+modelname+" ] Document "+str(instance.pk)+" updated in table "+table_to_use)
+            return res
+        res["status"] = R.write(DB, table_to_use, data)
+        res["created"] += 1
+        if verbose is True:
+            print("[ "+modelname+" ] Document "+str(instance.pk)+" created in table "+table_to_use)
     return res

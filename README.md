@@ -22,7 +22,6 @@ If you want a secondary index set on your model declare the index field:
 
   ```python
 MIRRORED_MODELS = [
-    'myapp.models.MyModel',
     ['django.contrib.auth.models.User', {"index_field": "username"}]
 ]
   ```
@@ -31,8 +30,25 @@ If you want to record a model in a different table than the default one:
 
   ```python
 MIRRORED_MODELS = [
-    'myapp.models.MyModel',
-    ['django.contrib.auth.models.User', {"index_field": "username", "table": "table_name"}]
+    ['django.contrib.auth.models.User', {"index_field": "username", "table": "users"}]
+]
+  ```
+  
+A model is imutable by default in the destination database: it will not be updated but produces a new write. To
+disable this behavior and update the data use this:
+
+  ```python
+MIRRORED_MODELS = [
+    ['django.contrib.auth.models.User', {"table": "users", "imutable": False}]
+]
+  ```
+  
+All the models use soft delete: the data is not deleted from the destination database. To
+disable this behavior and delete the data use this:
+  
+  ```python
+MIRRORED_MODELS = [
+    ['django.contrib.auth.models.User', {"table": "users", "soft_delete": False}]
 ]
   ```
   
