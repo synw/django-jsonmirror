@@ -75,10 +75,6 @@ RETHINKDB_USER = "admin" # default is None
 RETHINKDB_PASSWORD = "mypassword" # default is None
   ```
 
-### Custom backend
-
-To write your own backend you can use the setting ``MIRROR_BACKEND = "backendname_here"`` (if you do so please make some PR).
-
 ## Models synchronization
 
 The command ``python manage.py sync_models`` will mirror all the models declared in the ``MIRRORED_MODELS`` setting.
