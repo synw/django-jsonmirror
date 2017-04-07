@@ -22,7 +22,7 @@ If you want a secondary index set on your model declare the index field:
 
   ```python
 MIRRORED_MODELS = [
-    ['django.contrib.auth.models.User', {"index_field": "username"}]
+    ['myapp.models.MyModel', {"index_field": "myfieldname"}]
 ]
   ```
   
@@ -30,7 +30,7 @@ If you want to record a model in a different table than the default one:
 
   ```python
 MIRRORED_MODELS = [
-    ['django.contrib.auth.models.User', {"index_field": "username", "table": "users"}]
+    ['django.contrib.auth.models.User', {"table": "users"}]
 ]
   ```
   
