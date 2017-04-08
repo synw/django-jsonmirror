@@ -5,12 +5,7 @@ from django.conf import settings
 
 
 MIRRORED_MODELS = getattr(settings, 'MIRRORED_MODELS', [])
-
-BACKEND = getattr(settings, 'MIRROR_BACKEND', "sqlite")
-
-DB = getattr(settings, 'MIRROR_DB')
-TABLE = getattr(settings, 'MIRROR_TABLE')
-
+MIRROR_DATABASES = getattr(settings, 'MIRROR_DATABASES', [])
 
 def get_model_from_path(modpath):
     modsplit = modpath.split('.')
@@ -20,24 +15,29 @@ def get_model_from_path(modpath):
     model = getattr(module, modname)
     return model
 
+def get_db(dbname):
+    dbs = MIRROR_DATABASES
+    db = dbs[dbname]
+    return db
 
-def get_model_from_conf(modconf):
-    options = None
-    if type(modconf) is str:
-        model = get_model_from_path(modconf)
-    elif type(modconf) is list:
-        model = get_model_from_path(modconf[0])
-        options = modconf[1]
-    return model, options
+def get_db_options(instance):
+    db_options = {}
+    for mod in MIRRORED_MODELS.keys():
+        model = get_model_from_path(mod)
+        dbs = MIRRORED_MODELS[mod]
+        if model == instance.__class__:
+            for name in dbs.keys():
+                db_options[name] = dbs[name]
+                break
+    return db_options
 
-
-def get_option(instance, option_name):
-    mirrored_models = getattr(settings, 'MIRRORED_MODELS', [])
-    for modconf in mirrored_models:
-        if type(modconf) is list:
-            model, options = get_model_from_conf(modconf)
-            if model == instance.__class__:
-                #print "OPTIONS: "+str(options.keys())+" / "+option_name
-                if option_name in options.keys():
-                    return options[option_name]
+def get_option(instance, db, option_name):
+    for mod in MIRRORED_MODELS.keys():
+        model = get_model_from_path(mod)
+        dbs = MIRRORED_MODELS[mod]
+        if model == instance.__class__:
+            #print "OPTIONS: "+str(options.keys())+" / "+option_name
+            options = dbs[db]
+            if option_name in options.keys():
+                return options[option_name]
     return None

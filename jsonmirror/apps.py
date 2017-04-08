@@ -17,8 +17,8 @@ class JsonmirrorConfig(AppConfig):
             post_delete.connect(model_delete, sender = model)
             return
         
-        from jsonmirror.conf import get_model_from_conf
+        from jsonmirror.conf import get_model_from_path
         mirrored_models = getattr(settings, 'MIRRORED_MODELS', [])
-        for modconf in mirrored_models:
-            model, options = get_model_from_conf(modconf)
+        for modconf in mirrored_models.keys():
+            model = get_model_from_path(modconf)
             register_model(model)

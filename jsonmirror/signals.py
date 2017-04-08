@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from jsonmirror.utils import mirror_model_s, delete_model_s
+from jsonmirror.producers import mirror_model_s, delete_model_s
 
 
 def model_save(sender, instance, created, **kwargs):
