@@ -27,7 +27,7 @@ def document_exists(db, table, modelname, pk):
 def delete_model(instance, db, table, imutable, soft_delete):
     modelname = str(instance._meta)
     if imutable == True:
-        soft_delete = True
+        return
     filters = {"model": modelname, "pk": instance.pk}
     document_exists_in_db, document = document_exists(db, table, modelname, instance.pk)
     if soft_delete is False:
