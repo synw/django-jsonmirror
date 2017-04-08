@@ -17,14 +17,6 @@ Declare the models you want to mirror in settings.py:
   ```python
 MIRRORED_MODELS = ['myapp.models.MyModel', 'django.contrib.auth.models.User']
   ```
-
-If you want a secondary index set on your model declare the index field:
-
-  ```python
-MIRRORED_MODELS = [
-    ['myapp.models.MyModel', {"index_field": "myfieldname"}]
-]
-  ```
   
 If you want to record a model in a different table than the default one:
 
