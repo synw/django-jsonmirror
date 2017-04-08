@@ -21,13 +21,13 @@ def delete_model_s(instance):
             soft_delete = options["soft_delete"]
         table = options["table"]
         # get db
-        db = get_db(db)
-        dbname = db["name"]
-        dbtype = db["type"]
+        dbobj = get_db(db)
+        dbname = dbobj["name"]
+        dbtype = dbobj["type"]
         if dbtype == "sqlite":
             delete_model(instance, dbname, table, imutable, soft_delete)
         elif dbtype == "rethinkdb":
-            delete_model(instance, dbname, table, imutable, soft_delete)
+            r_delete_model(instance, dbname, table, imutable, soft_delete)
     return
 
 def mirror_model_s(instance, db, table, created=False, verbose=False):

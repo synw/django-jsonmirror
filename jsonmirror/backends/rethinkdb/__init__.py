@@ -24,13 +24,13 @@ def document_exists(db, table, modelname, pk):
     return json_document_exists, None
 
 
-def delete_model(instance, data, db, table, imutable, soft_delete):
+def delete_model(instance, db, table, imutable, soft_delete):
     modelname = str(instance._meta)
     if imutable == True:
         soft_delete = True
     filters = {"model": modelname, "pk": instance.pk}
+    document_exists_in_db, document = document_exists(db, table, modelname, instance.pk)
     if soft_delete is False:
-        document_exists_in_db, document = document_exists(db, table, modelname, instance.pk)
         if document_exists_in_db:
             R.delete_filtered(db, table, filters)
     else:
