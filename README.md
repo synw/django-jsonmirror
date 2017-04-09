@@ -4,8 +4,10 @@ Mirror and sync Django models in a json in another database.
 
 ## Install
 
+Clone then:
+
   ```python
-pip install git+https://github.com/synw/django-jsonmirror.git
+pip install -r django-jsonmirror/requirements.txt
   ```
 
 Add ``"jsonmirror",`` to installed apps.
@@ -46,14 +48,11 @@ MIRRORED_MODELS = [
   
 ## Backends
 
-Currently only [Rethinkdb](https://rethinkdb.com) is available as backend.
-
-
-### Rethinkdb
+### [Rethinkdb](https://rethinkdb.com)
 
 Install [django-R](https://github.com/synw/django-R).
 
-Extra settings:
+Settings:
 
   ```python
 
@@ -67,6 +66,18 @@ RETHINKDB_USER = "admin" # default is None
 RETHINKDB_PASSWORD = "mypassword" # default is None
   ```
 
+### [SqlAlchemy](http://www.sqlalchemy.org/)
+
+Settings:
+
+  ```python
+
+# required
+MIRROR_SQL_ENGINE = 'sqlite:///mirror.db'
+  ```
+  
+Refer to SqlAlchemy docs for how to [setup db urls](http://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls)
+
 ## Models synchronization
 
 The command ``python manage.py sync_models`` will mirror all the models declared in the ``MIRRORED_MODELS`` setting.
@@ -75,9 +86,9 @@ All the models declared in this setting will be auto created/deleted/updated in 
 
 ## Todo
 
-- [ ] Sqlite backend
+- [x] Sqlite backend
 - [ ] Redis backend
 - [ ] Support DRF serializers
 - [ ] Support custom serializers
-
+- [ ] Better handling of connection failure
  

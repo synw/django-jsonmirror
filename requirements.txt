@@ -1,0 +1,10 @@
+SQLAlchemy
+rethinkdb
+geojson
+jsonschema
+djangoajax
+six
+python-dateutil
+git+https://github.com/dmpayton/reqon.git
+git+https://github.com/synw/django-R.git
+git+https://github.com/synw/django-jsonmirror.git
