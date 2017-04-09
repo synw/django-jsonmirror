@@ -34,7 +34,7 @@ The `SITE_SLUG` setting is required
 
 ## Register models
 
-Declare the models you want to mirror in `settings.py`:
+Declare the models you want to mirror in `settings.py` and set database options on a per-model basis:
 
   ```python
 MIRRORED_MODELS = {
