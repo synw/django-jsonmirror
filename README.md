@@ -67,7 +67,7 @@ Set to `True` by default: the database is write only
 
 #### Soft delete
 
-When imutability is turned of the soft delete option, enabled by default, will mark documents as deleted
+When imutability is turned of the `soft delete` option, enabled by default, will mark documents as deleted
   
 ## Backends
 
@@ -101,9 +101,11 @@ the instance pk to use as compound index to retrieve the data.
 
 ## Models synchronization
 
-The command ``python manage.py sync_models`` will mirror all the models declared in the ``MIRRORED_MODELS`` setting.
+The models declared for mirroring will be auto synchronized in the secondary databases at each save/delete 
+operation performed on them
 
-All the models declared in this setting will be auto created/updated in the secondary databases.
+The command ``python manage.py sync_models`` will mirror all the models declared in the ``MIRRORED_MODELS`` setting.
+All the models declared in this setting will be auto created/updated in the secondary databases using this command.
 
 ## Todo
 
