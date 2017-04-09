@@ -105,7 +105,7 @@ The models declared for mirroring will be auto synchronized in the secondary dat
 operation performed on them
 
 The command ``python manage.py sync_models`` will mirror all the models declared in the ``MIRRORED_MODELS`` setting.
-All the models declared in this setting will be auto created/updated in the secondary databases using this command.
+They will be auto created/updated in the secondary databases using this command.
 
 ## Todo
 
