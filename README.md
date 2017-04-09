@@ -103,7 +103,7 @@ the instance pk to use as compound index to retrieve the data.
 
 The command ``python manage.py sync_models`` will mirror all the models declared in the ``MIRRORED_MODELS`` setting.
 
-All the models declared in this setting will be auto created/deleted/updated in the json database.
+All the models declared in this setting will be auto created/updated in the secondary databases.
 
 ## Todo
 
