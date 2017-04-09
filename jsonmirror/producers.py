@@ -30,7 +30,7 @@ def delete_model_s(instance):
             r_delete_model(instance, dbname, table, imutable, soft_delete)
     return
 
-def mirror_model_s(instance, db, table, created=False, verbose=False):
+def mirror_model_s(instance, created=False, verbose=False):
     # get options
     dboptions = get_db_options(instance)
     for db in dboptions.keys():

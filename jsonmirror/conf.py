@@ -28,7 +28,6 @@ def get_db_options(instance):
         if model == instance.__class__:
             for name in dbs.keys():
                 db_options[name] = dbs[name]
-                break
     return db_options
 
 def get_option(instance, db, option_name):

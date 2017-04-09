@@ -19,32 +19,42 @@ class Mirror(Base):
     key = Column(Integer, primary_key=True, autoincrement=True)
     id = Column(Integer)
     data = Column(String)
+    modelname = Column(String)
     
     def __repr__(self):
         return "<Mirror(id: '%s', data: '%s'')>" % (self.id, self.data)
 
 
 def delete_model(instance, dbname, table, imutable, soft_delete):
-    if soft_delete is True or imutable is True:
+    if imutable is True:
         return
-    rec = session.query(Mirror).get(instance.id)
-    session.query(Mirror).delete(id=rec.id)
-    return rec
+    modelname = instance.__class__.__name__
+    rec = session.query(Mirror).filter_by(id=instance.id, modelname=modelname).first()
+    if soft_delete is True:
+        data = json.loads(rec.data)
+        data["deleted"] = True
+        data = json.dumps(data)
+        rec.data = data
+        session.add(rec)
+    else:
+        session.delete(rec)
+    session.commit()
+    return
     
 def mirror_model(instance, data, db, table, created, imutable):
     data = json.dumps(data)
-    key = instance.id
-    if imutable == True:
-        num = session.query(Mirror).count()
-        key = num+1
-    obj = Mirror(key=key, id=instance.id, data=data)
+    num = session.query(Mirror).count()
+    key = num+1
+    modelname = instance.__class__.__name__
+    obj = Mirror(key=key, id=instance.id, data=data, modelname=instance.__class__.__name__)
     if created is True:
         session.add(obj)
     else:
         if imutable is False:
-            rec = session.query(Mirror).get(instance.id)
+            rec = session.query(Mirror).filter_by(id=instance.id, modelname=modelname).first()
             if rec:
                 rec.data = data
+                session.add(rec)
             else:
                 session.add(obj)
         else:
