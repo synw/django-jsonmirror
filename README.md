@@ -67,7 +67,8 @@ Set to `True` by default: the database is write only
 
 #### Soft delete
 
-When imutability is turned of the `soft delete` option, enabled by default, will mark documents as deleted
+When imutability is turned of the `soft delete` option, enabled by default, will mark documents as deleted.
+Set it to `False` to delete the documents in the database
   
 ## Backends
 
