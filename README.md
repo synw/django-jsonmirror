@@ -107,7 +107,7 @@ All the models declared in this setting will be auto created/deleted/updated in 
 
 ## Todo
 
-- [x] Sqlite backend
+- [x] SqlAlchemy backend
 - [ ] Redis backend
 - [ ] Support DRF serializers
 - [ ] Support custom serializers
